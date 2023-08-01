@@ -1,1 +1,74 @@
-<h1>Hello!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapping Early Modern Coventry</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 25vh;
+            margin: 0;
+            background-color: #ffffff;
+        }
+
+        #image-container {
+            position: absolute;
+            top: 25;
+            left: 0;
+        }
+
+        .layer-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .layer-image.active {
+            opacity: 1;
+        }
+
+        #button-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="button-container">
+        <button id="toggle-image2">Medieval Buildings</button>
+        <button id="toggle-image3">Administrative Wards</button>
+    </div>
+
+    <div id="image-container">
+        <img src="https://app.passaggi-files.co.uk/auralhistories/background.png" alt="Image 1" class="layer-image active" id="image1">
+        <img src="https://app.passaggi-files.co.uk/auralhistories/prerefprocessions.png" alt="Image 2" class="layer-image" id="image2">
+        <img src="https://app.passaggi-files.co.uk/auralhistories/wards.png" alt="Image 3" class="layer-image" id="image3">
+    </div>
+
+    <script>
+        const toggleImage2Btn = document.getElementById('toggle-image2');
+        const toggleImage3Btn = document.getElementById('toggle-image3');
+        const image2 = document.getElementById('image2');
+        const image3 = document.getElementById('image3');
+
+        toggleImage2Btn.addEventListener('click', () => {
+            image2.classList.toggle('active');
+        });
+
+        toggleImage3Btn.addEventListener('click', () => {
+            image3.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
+
