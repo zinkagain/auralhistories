@@ -1,87 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Mapping Early Modern Coventry</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        #imageContainer {
-            width: 600px;
-            height: 600px;
-            overflow: hidden;
-            position: relative;
-        }
-        #layeredImage {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            transform-origin: 0 0;
-            transition: transform 0.3s ease-in-out;
-        }
-        .layerButton {
-            display: inline-block;
-            margin: 5px;
-            padding: 8px 16px;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .layerButton.active {
-            background-color: #007bff;
-        }
-        #zoomControls {
-            margin-top: 10px;
-        }
-        .zoomButton {
-            padding: 5px 10px;
-            margin: 2px;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layered Image Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .viewer-container {
+      max-width: 1200px;
+      max-height:600px;
+      position: relative;
+      margin: 0 auto;
+    }
+    .viewer-container img {
+      width: 100%;
+      height: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .toggle-buttons {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1;
+    }
+    .zoom-buttons {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1;
+    }
+    .viewer-title {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Mapping Early Modern Coventry</h1>
-    <div>
-        <button class="layerButton active" onclick="toggleLayer(2)">Medieval Features</button>
-        <button class="layerButton active" onclick="toggleLayer(3)">Corpus Christi Processions</button>
+  <div class="viewer-title">Mapping Early Modern Coventry</div>
+  <div class="viewer-container">
+    <img id="image1" src="https://app.passaggi-files.co.uk/auralhistories/background-01.png" alt="Image 1">
+    <img id="image2" src="https://app.passaggi-files.co.uk/auralhistories/pre_ref-01.png" alt="Image 2" style="display:none;">
+    <img id="image3" src="https://app.passaggi-files.co.uk/auralhistories/cc_processions-01.png" alt="Image 3" style="display:none;">
+    <div class="toggle-buttons">
+      <button onclick="toggleLayer('image2')">Toggle Image 2</button>
+      <button onclick="toggleLayer('image3')">Toggle Image 3</button>
     </div>
-    <div id="zoomControls">
-        <button class="zoomButton" onclick="zoomIn()">Zoom In</button>
-        <button class="zoomButton" onclick="zoomOut()">Zoom Out</button>
+    <div class="zoom-buttons">
+      <button onclick="zoomIn()">Zoom In</button>
+      <button onclick="zoomOut()">Zoom Out</button>
     </div>
-    <div id="imageContainer">
-        <div id="layeredImage">
-            <img src="https://app.passaggi-files.co.uk/auralhistories/background-01.png" alt="Image 1" id="image1">
-            <img src="https://app.passaggi-files.co.uk/auralhistories/cc_processions-01.png" alt="Image 2" id="image2">
-            <img src="https://app.passaggi-files.co.uk/auralhistories/pre_ref-01.png" alt="Image 3" id="image3">
-        </div>
-    </div>
+  </div>
 
-    <script>
-        let scale = 1;
+  <script>
+    let zoomLevel = 1;
 
-        function toggleLayer(layerNumber) {
-            const image = document.getElementById('image' + layerNumber);
-            image.style.display = image.style.display === 'none' ? 'inline' : 'none';
-        }
+    function toggleLayer(imageId) {
+      const image = document.getElementById(imageId);
+      image.style.display = image.style.display === 'none' ? 'inline' : 'none';
+    }
 
-        function zoomIn() {
-            scale += 0.1;
-            updateZoom();
-        }
+    function zoomIn() {
+      zoomLevel += 0.1;
+      applyZoom();
+    }
 
-        function zoomOut() {
-            scale -= 0.1;
-            updateZoom();
-        }
+    function zoomOut() {
+      zoomLevel -= 0.1;
+      applyZoom();
+    }
 
-        function updateZoom() {
-            const layeredImage = document.getElementById('layeredImage');
-            layeredImage.style.transform = `scale(${scale})`;
-        }
-    </script>
+    function applyZoom() {
+      const images = document.querySelectorAll('.viewer-container img');
+      images.forEach(image => {
+        image.style.transform = `scale(${zoomLevel})`;
+      });
+    }
+  </script>
 </body>
 </html>
